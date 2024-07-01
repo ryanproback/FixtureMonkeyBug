@@ -46,6 +46,20 @@ class FixtureMonkeyTest {
         assertThat(actual).isNotNull();
     }
 
+    @RepeatedTest(100)
+    void testSuccess2() {
+        FixtureMonkey fixtureMonkey = FixtureMonkey.builder()
+                                                   .objectIntrospector(FieldReflectionArbitraryIntrospector.INSTANCE)
+                                                   .build();
+
+        TestSuccessObject2 actual = fixtureMonkey.giveMeBuilder(TestSuccessObject2.class)
+                                                .set("elements", Values.just(new HashSet<>()))
+                                                 .setNull("element")
+                                                .sample();
+
+        assertThat(actual).isNotNull();
+    }
+
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -60,8 +74,12 @@ class FixtureMonkeyTest {
         private Set<TestElement> elements;
     }
 
-
-
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    static class TestSuccessObject2 {
+        private Set<TestElement> elements;
+        private TestElement element;
+    }
 
 
     @Getter
