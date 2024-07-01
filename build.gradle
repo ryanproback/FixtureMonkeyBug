@@ -22,7 +22,7 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.30'
 
     // https://naver.github.io/fixture-monkey/v1-0-0/docs/get-started/requirements/
-    testImplementation("com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.14")
+    testImplementation("com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.20")
 
     // https://mvnrepository.com/artifact/org.assertj/assertj-core
     testImplementation 'org.assertj:assertj-core:3.26.0'

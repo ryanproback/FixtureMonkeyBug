@@ -40,8 +40,22 @@ class FixtureMonkeyTest {
                                                    .build();
 
         TestSuccessObject actual = fixtureMonkey.giveMeBuilder(TestSuccessObject.class)
-                                             .set("elements", Values.just(new HashSet<>()))
-                                             .sample();
+                                                .set("elements", Values.just(new HashSet<>()))
+                                                .sample();
+
+        assertThat(actual).isNotNull();
+    }
+
+    @RepeatedTest(100)
+    void testSuccess2() {
+        FixtureMonkey fixtureMonkey = FixtureMonkey.builder()
+                                                   .objectIntrospector(FieldReflectionArbitraryIntrospector.INSTANCE)
+                                                   .build();
+
+        TestSuccessObject2 actual = fixtureMonkey.giveMeBuilder(TestSuccessObject2.class)
+                                                 .set("elements", Values.just(new HashSet<>()))
+                                                 .setNull("element")
+                                                 .sample();
 
         assertThat(actual).isNotNull();
     }
