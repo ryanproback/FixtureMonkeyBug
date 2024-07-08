@@ -60,20 +60,33 @@ class FixtureMonkeyTest {
         assertThat(actual).isNotNull();
     }
 
+
     @RepeatedTest(100)
-    void testSuccess2() {
+    void testSuccess3() {
         FixtureMonkey fixtureMonkey = FixtureMonkey.builder()
                                                    .objectIntrospector(FieldReflectionArbitraryIntrospector.INSTANCE)
                                                    .build();
 
-        TestSuccessObject2 actual = fixtureMonkey.giveMeBuilder(TestSuccessObject2.class)
-                                                .set("elements", Values.just(new HashSet<>()))
-                                                 .setNull("element")
-                                                .sample();
+        TestSuccessObject3 actual = fixtureMonkey.giveMeBuilder(TestSuccessObject3.class)
+                                                 .set("referenceTestObjectElement", Values.just(null))
+                                                 .sample();
 
         assertThat(actual).isNotNull();
     }
 
+    @RepeatedTest(100)
+    void testFail2() {
+        FixtureMonkey fixtureMonkey = FixtureMonkey.builder()
+                .objectIntrospector(FieldReflectionArbitraryIntrospector.INSTANCE)
+                .build();
+
+        // 간혈적인 FixedValueFilterMissException 발생
+        TestSuccessObject3 actual = fixtureMonkey.giveMeBuilder(TestSuccessObject3.class)
+                .set("referenceTestObjectElement", null)
+                .sample();
+
+        assertThat(actual).isNotNull();
+    }
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -93,6 +106,12 @@ class FixtureMonkeyTest {
     static class TestSuccessObject2 {
         private Set<TestElement> elements;
         private TestElement element;
+    }
+
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    static class TestSuccessObject3 {
+        private ReferenceTestObjectElement referenceTestObjectElement;
     }
 
 
